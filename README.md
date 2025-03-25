@@ -174,3 +174,37 @@ n8nio/n8n:latest
 Bu komut, daha önce kullandığınız ve `yedek` volume'ünü `/home/node/.n8n` dizinine bağlayan aynı komuttur. Bu sayede n8n, volume'deki mevcut verileri kullanacaktır.
 
 Konteyner tekrar başlatıldıktan sonra (birkaç dakika sürebilir), `https://sizin-domain.com/` adresinden n8n arayüzüne tekrar erişmeyi deneyin. Eğer yedekleme başarılı olduysa, daha önce oluşturduğunuz workflow'ları ve credential'ları görmelisiniz.
+
+************************************************************************************************************
+************************************************************************************************************
+************************************************************************************************************
+************************************************************************************************************
+************************************************************************************************************
+
+### Adım 16: N8N Docker İmajını Güncelleme
+
+N8N'in yeni bir sürümü çıktığında, Docker imajını güncellemek için aşağıdaki adımları takip edin:
+
+```bash
+# En son n8n imajını çek
+sudo docker pull n8nio/n8n:latest
+
+# Mevcut konteyneri durdur
+sudo docker stop n8n
+
+# Mevcut konteyneri sil
+sudo docker rm n8n
+
+# Yeni imaj ile konteyneri tekrar oluştur
+sudo docker run -d --restart unless-stopped \
+--name n8n \
+-p 5678:5678 \
+-e N8N_HOST="sizin-domain.com" \
+-e WEBHOOK_TUNNEL_URL="https://sizin-domain.com/" \
+-e WEBHOOK_URL="https://sizin-domain.com/" \
+-e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
+-v yedek:/home/node/.n8n \
+n8nio/n8n:latest
+```
+
+Bu işlem sonrasında n8n, en son sürümü ile çalışmaya devam edecektir. Verileriniz `yedek` volume'ünde saklandığı için güncelleme sırasında kaybolmayacaktır.
