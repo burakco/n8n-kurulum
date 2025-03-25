@@ -1,28 +1,33 @@
-# n8n-kurulum
+# Google Cloud Üzerinde Docker, Nginx ve Certbot ile n8n Kurulumu
 
-# Google Cloud Setup  Docker and Nginx & Cerbot for n8n
-
-### Step 1: Update the system
+### Adım 1: Sistem Güncellemesi
 ```bash
 sudo apt update
 ```
 
-### Step 2: Install Docker
+### Adım 2: Docker Kurulumu
 ```bash
 sudo apt install docker.io
 ```
 
-### Step 3: Start Docker service
+### Adım 3: Docker Servisini Başlatma
 ```bash
 sudo systemctl start docker
 ```
 
-### Step 4: Enable Docker service
+### Adım 4: Docker Servisini Etkinleştirme
 ```bash
 sudo systemctl enable docker
 ```
 
-### Step 5: Run N8N Docker Container
+### Adım 5: Docker Volume Oluşturma
+```bash
+sudo docker volume create yedek
+```
+
+Bu komut, n8n verilerinizi saklamak için kullanılacak olan `yedek` adında bir Docker volume'ü oluşturacaktır. Bu volume, konteyner silinse bile verilerinizin güvenli bir şekilde saklanmasını sağlayacaktır.
+
+### Adım 6: N8N Docker Konteynerini Çalıştırma
 ```bash
 sudo docker run -d --restart unless-stopped \
 --name n8n \
@@ -35,16 +40,17 @@ sudo docker run -d --restart unless-stopped \
 n8nio/n8n
 ```
 
-### Step 6: Install Nginx
+### Adım 7: Nginx Kurulumu
 ```bash
 sudo apt install nginx
 ```
 
-### Step 7: Create an Nginx configuration file for N8N
+### Adım 8: N8N için Nginx Yapılandırma Dosyası Oluşturma
 ```bash
 sudo nano /etc/nginx/sites-available/n8n
 ```
-Add the following content:
+
+Aşağıdaki içeriği ekleyin:
 ```nginx
 server {
     listen 80;
@@ -57,11 +63,11 @@ server {
         proxy_buffering off;
         proxy_cache off;
 
-        # Headers for WebSocket support
+        # WebSocket desteği için başlıklar
         proxy_set_header Connection 'Upgrade';
         proxy_set_header Upgrade $http_upgrade;
 
-        # Additional headers for forwarding client info
+        # İstemci bilgilerini iletmek için ek başlıklar
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -69,48 +75,55 @@ server {
     }
 }
 ```
-Save and exit using:
+
+Kaydetmek ve çıkmak için:
 ```bash
 CTRL+O, ENTER, CTRL+X
 ```
 
-### Step 8: Enable the Nginx configuration
+### Adım 9: Nginx Yapılandırmasını Etkinleştirme
 ```bash
 sudo ln -s /etc/nginx/sites-available/n8n /etc/nginx/sites-enabled/
 ```
 
-### Step 9: Test Nginx configuration
+### Adım 10: Nginx Yapılandırmasını Test Etme
 ```bash
 sudo nginx -t
 ```
 
-### Step 10: Restart Nginx service
+### Adım 11: Nginx Servisini Yeniden Başlatma
 ```bash
 sudo systemctl restart nginx
 ```
 
-### Step 11: Install Certbot for SSL Certificates
+### Adım 12: SSL Sertifikaları için Certbot Kurulumu
 ```bash
 sudo apt install certbot python3-certbot-nginx
 ```
 
-### Step 12: Obtain SSL Certificate
+### Adım 13: SSL Sertifikası Alma
 ```bash
 sudo certbot --nginx -d your-domain.com
 ```
 
-### Step 14: Restart Nginx service
+### Adım 14: Nginx Servisini Yeniden Başlatma
 ```bash
 sudo systemctl restart nginx
 ```
 
-### Step 15: Yedekleme Kontrolü ve Konteyner Yeniden Kurulumu
+************************************************************************************************************
+************************************************************************************************************
+************************************************************************************************************
+************************************************************************************************************
+************************************************************************************************************
 
-Elbette, yedeklemenin başarılı olup olmadığını görmek için konteyneri silip tekrar kurma adımlarını ve kodlarını aşağıda bulabilirsiniz:
+### Adım 15: Yedekleme Kontrolü ve Konteyner Yeniden Kurulumu
+
+Yedeklemenin başarılı olup olmadığını kontrol etmek için konteyneri silip tekrar kurma adımları:
 
 **Dikkat:** Bu işlem mevcut çalışan n8n konteynerinizi silecektir. Ancak `yedek` volume'ünüz doğru şekilde yapılandırıldıysa, verileriniz bu volume'de saklandığı için kaybolmayacaktır.
 
-**Adım 1: Çalışan Konteynerleri Listeleme (isteğe bağlı, ancak kontrol etmek iyi olabilir):**
+**Alt Adım 1: Çalışan Konteynerleri Listeleme (İsteğe Bağlı Kontrol)**
 
 ```bash
 sudo docker ps
@@ -118,7 +131,7 @@ sudo docker ps
 
 Bu komut, çalışan konteynerlerin listesini gösterir. `n8n` adlı konteynerinizin listede olduğundan emin olun.
 
-**Adım 2: n8n Konteynerini Durdurma:**
+**Alt Adım 2: n8n Konteynerini Durdurma**
 
 ```bash
 sudo docker stop n8n
@@ -126,7 +139,7 @@ sudo docker stop n8n
 
 Bu komut, çalışan `n8n` konteynerini durduracaktır.
 
-**Adım 3: n8n Konteynerini Silme:**
+**Alt Adım 3: n8n Konteynerini Silme**
 
 ```bash
 sudo docker rm n8n
@@ -134,7 +147,7 @@ sudo docker rm n8n
 
 Bu komut, durdurulmuş olan `n8n` konteynerini sisteminizden tamamen silecektir.
 
-**Adım 4: n8n Konteynerini Tekrar Oluşturma (Aynı `docker run` komutuyla):**
+**Alt Adım 4: n8n Konteynerini Tekrar Oluşturma**
 
 ```bash
 sudo docker run -d --restart unless-stopped \
@@ -150,9 +163,6 @@ n8nio/n8n
 
 Bu komut, daha önce kullandığınız ve `yedek` volume'ünü `/home/node/.n8n` dizinine bağlayan aynı komuttur. Bu sayede n8n, volume'deki mevcut verileri kullanacaktır.
 
-**Adım 5: Verilerin Kontrol Edilmesi:**
+**Alt Adım 5: Verilerin Kontrol Edilmesi**
 
 Konteyner tekrar başlatıldıktan sonra (birkaç dakika sürebilir), `https://n8n.burakco.net/` adresinden n8n arayüzüne tekrar erişmeyi deneyin. Eğer yedekleme başarılı olduysa, daha önce oluşturduğunuz workflow'ları ve credential'ları görmelisiniz.
-
-Lütfen bu adımları sırasıyla uygulayın ve sonucu benimle paylaşın. Eğer bir sorun yaşarsanız veya workflow ve credential'larınız görünmezse, lütfen bana bildirin.
-
