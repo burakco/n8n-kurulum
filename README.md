@@ -27,6 +27,16 @@ sudo docker volume create yedek
 
 Bu komut, n8n verilerinizi saklamak için kullanılacak olan `yedek` adında bir Docker volume'ü oluşturacaktır. Bu volume, konteyner silinse bile verilerinizin güvenli bir şekilde saklanmasını sağlayacaktır.
 
+Volume'ün mount noktasını ve detaylarını görüntülemek için:
+```bash
+sudo docker volume inspect yedek
+```
+
+Volume içindeki dosya ve klasörleri listelemek için:
+```bash
+sudo sh -c "cd /var/lib/docker/volumes/yedek/_data && ls -al"
+```
+
 ### Adım 6: N8N Docker Konteynerini Çalıştırma
 ```bash
 sudo docker run -d --restart unless-stopped \
