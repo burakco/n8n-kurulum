@@ -32,9 +32,9 @@ Bu komut, n8n verilerinizi saklamak için kullanılacak olan `yedek` adında bir
 sudo docker run -d --restart unless-stopped \
 --name n8n \
 -p 5678:5678 \
--e N8N_HOST="n8n.burakco.net" \
--e WEBHOOK_TUNNEL_URL="https://n8n.burakco.net/" \
--e WEBHOOK_URL="https://n8n.burakco.net/" \
+-e N8N_HOST="sizin-domain.com" \
+-e WEBHOOK_TUNNEL_URL="https://sizin-domain.com/" \
+-e WEBHOOK_URL="https://sizin-domain.com/" \
 -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
 -v yedek:/home/node/.n8n \
 n8nio/n8n
@@ -54,7 +54,7 @@ Aşağıdaki içeriği ekleyin:
 ```nginx
 server {
     listen 80;
-    server_name your-domain.com;
+    server_name sizin-domain.com;
 
     location / {
         proxy_pass http://localhost:5678;
@@ -103,7 +103,7 @@ sudo apt install certbot python3-certbot-nginx
 
 ### Adım 13: SSL Sertifikası Alma
 ```bash
-sudo certbot --nginx -d your-domain.com
+sudo certbot --nginx -d sizin-domain.com
 ```
 
 ### Adım 14: Nginx Servisini Yeniden Başlatma
@@ -153,9 +153,9 @@ Bu komut, durdurulmuş olan `n8n` konteynerini sisteminizden tamamen silecektir.
 sudo docker run -d --restart unless-stopped \
 --name n8n \
 -p 5678:5678 \
--e N8N_HOST="n8n.burakco.net" \
--e WEBHOOK_TUNNEL_URL="https://n8n.burakco.net/" \
--e WEBHOOK_URL="https://n8n.burakco.net/" \
+-e N8N_HOST="sizin-domain.com" \
+-e WEBHOOK_TUNNEL_URL="https://sizin-domain.com/" \
+-e WEBHOOK_URL="https://sizin-domain.com/" \
 -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
 -v yedek:/home/node/.n8n \
 n8nio/n8n
@@ -163,6 +163,4 @@ n8nio/n8n
 
 Bu komut, daha önce kullandığınız ve `yedek` volume'ünü `/home/node/.n8n` dizinine bağlayan aynı komuttur. Bu sayede n8n, volume'deki mevcut verileri kullanacaktır.
 
-**Alt Adım 5: Verilerin Kontrol Edilmesi**
-
-Konteyner tekrar başlatıldıktan sonra (birkaç dakika sürebilir), `https://n8n.burakco.net/` adresinden n8n arayüzüne tekrar erişmeyi deneyin. Eğer yedekleme başarılı olduysa, daha önce oluşturduğunuz workflow'ları ve credential'ları görmelisiniz.
+Konteyner tekrar başlatıldıktan sonra (birkaç dakika sürebilir), `https://sizin-domain.com/` adresinden n8n arayüzüne tekrar erişmeyi deneyin. Eğer yedekleme başarılı olduysa, daha önce oluşturduğunuz workflow'ları ve credential'ları görmelisiniz.
