@@ -187,22 +187,22 @@ Konteyner tekrar başlatıldıktan sonra (birkaç dakika sürebilir), `https://s
 
 N8N'in yeni bir sürümü çıktığında, Docker imajını güncellemek için aşağıdaki adımları takip edin:
 
-# Mevcut konteyneri durdur
+### Mevcut konteyneri durdur
 ```bash
 sudo docker stop n8n
 ```
 
-# Mevcut konteyneri sil
+### Mevcut konteyneri sil
 ```bash
 sudo docker rm n8n
 ```
 
-# En son n8n imajını çek
+### En son n8n imajını çek
 ```bash
 sudo docker pull docker.n8n.io/n8nio/n8n:latest
 ```
 
-# Yeni imaj ile konteyneri tekrar oluştur
+### Yeni imaj ile konteyneri tekrar oluştur
 ```bash
 sudo docker run -d --restart unless-stopped \
 --name n8n \
