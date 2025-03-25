@@ -48,7 +48,7 @@ sudo docker run -d --restart unless-stopped \
 -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
 -e N8N_RUNNERS_ENABLED=true \
 -v yedek:/home/node/.n8n \
-n8nio/n8n:latest
+docker.n8n.io/n8nio/n8n:latest
 ```
 
 ### Adım 7: Nginx Kurulumu
@@ -170,7 +170,7 @@ sudo docker run -d --restart unless-stopped \
 -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
 -e N8N_RUNNERS_ENABLED=true \
 -v yedek:/home/node/.n8n \
-n8nio/n8n:latest
+docker.n8n.io/n8nio/n8n:latest
 ```
 
 Bu komut, daha önce kullandığınız ve `yedek` volume'ünü `/home/node/.n8n` dizinine bağlayan aynı komuttur. Bu sayede n8n, volume'deki mevcut verileri kullanacaktır.
@@ -189,7 +189,7 @@ N8N'in yeni bir sürümü çıktığında, Docker imajını güncellemek için a
 
 ```bash
 # En son n8n imajını çek
-sudo docker pull n8nio/n8n:latest
+sudo docker pull docker.n8n.io/n8nio/n8n:latest
 
 # Mevcut konteyneri durdur
 sudo docker stop n8n
@@ -207,7 +207,7 @@ sudo docker run -d --restart unless-stopped \
 -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
 -e N8N_RUNNERS_ENABLED=true \
 -v yedek:/home/node/.n8n \
-n8nio/n8n:latest
+docker.n8n.io/n8nio/n8n:latest
 ```
 
 Bu işlem sonrasında n8n, en son sürümü ile çalışmaya devam edecektir. Verileriniz `yedek` volume'ünde saklandığı için güncelleme sırasında kaybolmayacaktır.
