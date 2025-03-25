@@ -46,6 +46,7 @@ sudo docker run -d --restart unless-stopped \
 -e WEBHOOK_TUNNEL_URL="https://sizin-domain.com/" \
 -e WEBHOOK_URL="https://sizin-domain.com/" \
 -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
+-e N8N_RUNNERS_ENABLED=true \
 -v yedek:/home/node/.n8n \
 n8nio/n8n:latest
 ```
@@ -167,6 +168,7 @@ sudo docker run -d --restart unless-stopped \
 -e WEBHOOK_TUNNEL_URL="https://sizin-domain.com/" \
 -e WEBHOOK_URL="https://sizin-domain.com/" \
 -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
+-e N8N_RUNNERS_ENABLED=true \
 -v yedek:/home/node/.n8n \
 n8nio/n8n:latest
 ```
@@ -203,6 +205,7 @@ sudo docker run -d --restart unless-stopped \
 -e WEBHOOK_TUNNEL_URL="https://sizin-domain.com/" \
 -e WEBHOOK_URL="https://sizin-domain.com/" \
 -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
+-e N8N_RUNNERS_ENABLED=true \
 -v yedek:/home/node/.n8n \
 n8nio/n8n:latest
 ```
