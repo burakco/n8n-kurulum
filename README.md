@@ -27,12 +27,12 @@ sudo docker volume create yedek
 
 Bu komut, n8n verilerinizi saklamak için kullanılacak olan `yedek` adında bir Docker volume'ü oluşturacaktır. Bu volume, konteyner silinse bile verilerinizin güvenli bir şekilde saklanmasını sağlayacaktır.
 
-Volume'ün mount noktasını ve detaylarını görüntülemek için:
+Kontrol amaçlı Volume'ün mount noktasını ve detaylarını görüntülemek için:
 ```bash
 sudo docker volume inspect yedek
 ```
 
-Volume içindeki dosya ve klasörleri listelemek için:
+Kontrol amaçlı Volume içindeki dosya ve klasörleri listelemek için:
 ```bash
 sudo sh -c "cd /var/lib/docker/volumes/yedek/_data && ls -al"
 ```
@@ -47,7 +47,7 @@ sudo docker run -d --restart unless-stopped \
 -e WEBHOOK_URL="https://sizin-domain.com/" \
 -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
 -v yedek:/home/node/.n8n \
-n8nio/n8n
+n8nio/n8n:latest
 ```
 
 ### Adım 7: Nginx Kurulumu
@@ -168,7 +168,7 @@ sudo docker run -d --restart unless-stopped \
 -e WEBHOOK_URL="https://sizin-domain.com/" \
 -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
 -v yedek:/home/node/.n8n \
-n8nio/n8n
+n8nio/n8n:latest
 ```
 
 Bu komut, daha önce kullandığınız ve `yedek` volume'ünü `/home/node/.n8n` dizinine bağlayan aynı komuttur. Bu sayede n8n, volume'deki mevcut verileri kullanacaktır.
